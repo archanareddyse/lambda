@@ -1,1 +1,52 @@
+SQS Access Policy
+json
+{
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "sns.amazonaws.com"
+      },
+      "Action": "sqs:SendMessage",
+      "Resource": "SQS ARN",
+      "Condition": {
+        "ArnEquals": {
+          "aws:SourceArn": "SNS ARN"
+        }
+      }
+    }
+  ]
+}
+
+SNS Access Policy
+
+{
+  "Version": "2012-10-17",
+  "Id": "example-ID",
+  "Statement": [
+    {
+      "Sid": "Example SNS topic policy",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "s3.amazonaws.com"
+      },
+      "Action": [
+        "SNS:Publish"
+      ],
+      "Resource": "SNS topic ARN",
+      "Condition": {
+        "ArnLike": {
+          "aws:SourceArn": "s3 bucket ARN"
+        },
+        "StringEquals": {
+          "aws:SourceAccount": "account id"
+        }
+      }
+    }
+  ]
+}
+
+
+
+If you want, I can also show the **complete architecture flow for S3 → SNS → SQS → Lambda** which is very useful for **AWS lab experiments and viva questions**.
 
